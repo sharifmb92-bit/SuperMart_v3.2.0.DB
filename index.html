@@ -256,7 +256,7 @@
             <button class="btn-mini" onclick="cerrarModalEscaner()">✕</button>
         </div>
 
-        <p style="font-size:12px; color:var(--texto); opacity:0.8; margin-bottom:12px;">
+        <p style="font-size:12px; color:var(--texto); opacity:0.8; margin-bottom:12px;" data-i18n="scanner_sub">
             Escanea tu recibo de papel tras comprar. Si el ticket es largo, puedes fotografiarlo por tramos con el botón de añadir fotos.
         </p>
 
@@ -270,8 +270,8 @@
 
             <div id="instrucciones-subida">
                 <i class="fas fa-camera" style="font-size:32px; color:var(--azul); margin-bottom:8px;"></i>
-                <p style="font-size:13px; font-weight:bold; margin:0; color:var(--texto);" id="texto-boton-captura">Toca para fotografiar ticket</p>
-                <small style="font-size:11px; color:gray;">Acerca la cámara para asegurar lectura nítida</small>
+                <p style="font-size:13px; font-weight:bold; margin:0; color:var(--texto);" id="texto-boton-captura" data-i18n="btn_photo_ticket">Toca para fotografiar ticket</p>
+                <small style="font-size:11px; color:gray;" data-i18n="photo_tip">Acerca la cámara para asegurar lectura nítida</small>
             </div>
         </div>
 
@@ -279,27 +279,27 @@
         <div id="loader-escaner" style="display:none; text-align:center; padding:12px; background:rgba(0,0,0,0.05); border-radius:10px; margin-bottom:12px;">
             <i class="fas fa-spinner fa-spin" style="font-size:24px; color:var(--azul); margin-bottom:6px;"></i>
             <p style="font-size:13px; font-weight:bold; margin:0;" id="texto-progreso-ocr">Analizando ticket...</p>
-            <small style="font-size:11px; color:gray;">Procesando localmente en tu móvil</small>
+            <small style="font-size:11px; color:gray;" data-i18n="ocr_local_tip">Procesando localmente en tu móvil</small>
         </div>
 
         <!-- Resultados Detectados -->
         <div id="contenedor-resultados-ticket" style="display:none; margin-bottom:12px;">
-            <div style="display:flex; justify-between; align-items:center; margin-bottom:8px;">
-                <strong style="font-size:12px; color:var(--texto);">Productos Acumulados:</strong>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="font-size:12px; color:var(--texto);" data-i18n="acc_items_title">Productos Acumulados:</strong>
                 <span id="total-detectados" style="font-size:12px; font-weight:bold; color:var(--azul);">0 encontrados</span>
             </div>
             
             <div id="lista-items-detectados" style="max-height:160px; overflow-y:auto; font-size:12px; border:1px solid rgba(0,0,0,0.1); border-radius:8px; padding:6px; background:rgba(255,255,255,0.4);"></div>
 
             <!-- Botón Multifoto -->
-            <button onclick="document.getElementById('input-foto-ticket').click()" class="btn-mini" style="width:100%; margin-top:8px; background:rgba(0,0,0,0.08); color:var(--texto); padding:8px; font-size:12px; border:1px solid rgba(0,0,0,0.15);">
+            <button onclick="document.getElementById('input-foto-ticket').click()" class="btn-mini" style="width:100%; margin-top:8px; background:rgba(0,0,0,0.08); color:var(--texto); padding:8px; font-size:12px; border:1px solid rgba(0,0,0,0.15);" data-i18n="btn_add_more_photos">
                 📸 Añadir otro tramo del ticket
             </button>
         </div>
 
         <div style="display:flex; gap:8px; margin-top:12px;">
-            <button class="btn-mini" style="flex:1; padding:10px; background:var(--gris); color:white;" onclick="cerrarModalEscaner()">Cancelar</button>
-            <button id="btn-guardar-ticket" class="btn-mini" style="flex:1; padding:10px; background:var(--verde); color:white;" onclick="confirmarImportacionTicket()" disabled>¡Importar A la App!</button>
+            <button class="btn-mini" style="flex:1; padding:10px; background:var(--gris); color:white;" onclick="cerrarModalEscaner()" data-i18n="btn_cancel">Cancelar</button>
+            <button id="btn-guardar-ticket" class="btn-mini" style="flex:1; padding:10px; background:var(--verde); color:white;" onclick="confirmarImportacionTicket()" disabled data-i18n="btn_import_app">¡Importar A la App!</button>
         </div>
     </div>
 </div>
@@ -327,7 +327,7 @@
     </div>
 </div>
 
-<!-- Modal Tutorial -->
+<!-- Modal Tutorial CORREGIDO MULTILINGÜE -->
 <div class="modal" id="modal-tutorial">
     <div class="modal-contenido">
         <div class="modal-header">
@@ -337,7 +337,7 @@
         <div style="font-size:13px; line-height:1.6;">
             <p>1️⃣ <strong data-i18n="tut_step1_b">Antes de salir:</strong> <span data-i18n="tut_step1">Abre la app y entra en cada categoría. Guarda lo que necesitas comprando o apuntando nuevos productos (incluso con 0.00€ para apuntarlo desde casa).</span></p>
             <p>2️⃣ <strong data-i18n="tut_step2_b">En el súper:</strong> <span data-i18n="tut_step2">Si un producto tiene 0.00€ o ha cambiado de precio, toca el lápiz (✏️) para poner su valor real antes de añadirlo al carro.</span></p>
-            <p>3️⃣ <strong>🧾 Novedad Escáner:</strong> Usa el botón flotante 🧾 para fotografiar tu recibo de papel tras comprar. Los precios y productos se colocarán en sus tarjetas solas.</p>
+            <p>3️⃣ <strong data-i18n="tut_step3_scan_b">🧾 Novedad Escáner:</strong> <span data-i18n="tut_step3_scan">Usa el botón flotante 🧾 para fotografiar tu recibo de papel tras comprar. Los precios y productos se colocarán en sus tarjetas solas.</span></p>
             <p>4️⃣ <strong data-i18n="tut_step3_b">Control de gasto:</strong> <span data-i18n="tut_step3">El semáforo superior te avisará en verde, amarillo y rojo según te acerques a tu presupuesto.</span></p>
             <p>5️⃣ <strong data-i18n="tut_step4_b">Al terminar:</strong> <span data-i18n="tut_step4">Pulsa <b>PAGAR</b> para registrar el supermercado y guardar la lista en tu historial.</span></p>
         </div>
@@ -649,9 +649,10 @@
             btn_pay: "PAGAR", cafe_title: "☕ Invítame a un Café",
             cafe_desc: "<strong>SuperMart</strong> es una aplicación 100% gratuita y libre de anuncios.<br><br>Si te resulta útil para gestionar tus compras diarias, puedes hacer una pequeña aportación. Puedes pagar con <strong>tarjeta normal, Google Pay o PayPal</strong> de forma rápida y segura.",
             pay_revolut: "💳 Pagar con Tarjeta o Google Pay (Revolut)", pay_paypal: "🅿️ Pagar con PayPal",
-            tut_title: "📖 Cómo usar SuperMart",
+            tut_title: "📖 Cómo usar SuperMart v3.2.0",
             tut_step1_b: "Antes de salir:", tut_step1: "Abre la app y entra en cada categoría. Guarda lo que necesitas comprando o apuntando nuevos productos (incluso con 0.00€ para apuntarlo desde casa).",
             tut_step2_b: "En el súper:", tut_step2: "Si un producto tiene 0.00€ o ha cambiado de precio, toca el lápiz (✏️) para poner su valor real antes de añadirlo al carro.",
+            tut_step3_scan_b: "🧾 Novedad Escáner:", tut_step3_scan: "Usa el botón flotante 🧾 para fotografiar tu recibo de papel tras comprar. Los precios y productos se colocarán en sus tarjetas solas.",
             tut_step3_b: "Control de gasto:", tut_step3: "El semáforo superior te avisará en verde, amarillo y rojo según te acerques a tu presupuesto.",
             tut_step4_b: "Al terminar:", tut_step4: "Pulsa <b>PAGAR</b> para registrar el supermercado y guardar la lista en tu historial.",
             btn_understood: "¡Entendido!", calc_title: "🧮 Calculadora & Ofertas", calc_use: "📋 Usar",
@@ -664,7 +665,9 @@
             danger_zone: "⚠️ ZONA DE PELIGRO", btn_clear_hist: "Borrar Historial Completo", switch_aisles_label: "🛒 Ordenar por Pasillos / Zonas:",
             sync_title: "📱 Sincronización entre Móviles:", btn_copy_key: "Copiar Clave", btn_link_device: "Vincular Móvil", btn_unlink_device: "Desvincular Dispositivo",
             zone_entrance: "Zona 1: Entrada y Frescos", zone_dry: "Zona 2: Pasillos Secos (Despensa)", zone_cold: "Zona 3: Murales de Frío & Carnes", zone_home: "Zona 4: Droguería y Cuidado Personal", zone_checkout: "Zona 5: Salida & Congelados",
-            scanner_title: "Escáner de Tickets de Compra"
+            scanner_title: "Escáner de Tickets de Compra", scanner_sub: "Escanea tu recibo de papel tras comprar. Si el ticket es largo, puedes fotografiarlo por tramos con el botón de añadir fotos.",
+            btn_photo_ticket: "Toca para fotografiar ticket", photo_tip: "Acerca la cámara para asegurar lectura nítida", ocr_local_tip: "Procesando localmente en tu móvil",
+            acc_items_title: "Productos Acumulados:", btn_add_more_photos: "📸 Añadir otro tramo del ticket", btn_cancel: "Cancelar", btn_import_app: "¡Importar A la App!"
         },
         en: {
             btn_cart: "Cart", search_ph: "🔍 Type product (e.g. butter, tomato)...", app_heading: "Family Expenses",
@@ -674,9 +677,10 @@
             btn_pay: "CHECKOUT", cafe_title: "☕ Buy me a Coffee",
             cafe_desc: "<strong>SuperMart</strong> is 100% free with no ads.<br><br>Support the app with card, Google Pay or PayPal.",
             pay_revolut: "💳 Pay with Card or Google Pay (Revolut)", pay_paypal: "🅿️ Pay with PayPal",
-            tut_title: "📖 How to use SuperMart",
-            tut_step1_b: "Before shopping:", tut_step1: "Add items to your cart at home even at €0.00.",
-            tut_step2_b: "At the store:", tut_step2: "Tap pencil (✏️) to set prices before adding.",
+            tut_title: "📖 How to use SuperMart v3.2.0",
+            tut_step1_b: "Before shopping:", tut_step1: "Open the app and check each category. Add items to your list at home even at €0.00.",
+            tut_step2_b: "At the store:", tut_step2: "Tap the pencil (✏️) to set exact prices before adding items to your cart.",
+            tut_step3_scan_b: "🧾 New Receipt Scanner:", tut_step3_scan: "Use the floating button 🧾 to photograph your paper receipt after shopping. Prices and items will automatically update in your cards.",
             tut_step3_b: "Budget control:", tut_step3: "Top bar changes color as you spend.",
             tut_step4_b: "At checkout:", tut_step4: "Tap <b>CHECKOUT</b> to save receipt.",
             btn_understood: "Got it!", calc_title: "🧮 Calculator", calc_use: "📋 Use",
@@ -689,7 +693,9 @@
             danger_zone: "⚠️ DANGER ZONE", btn_clear_hist: "Clear Complete History", switch_aisles_label: "🛒 Sort by Aisles / Zones:",
             sync_title: "📱 Device Sync:", btn_copy_key: "Copy Key", btn_link_device: "Link Device", btn_unlink_device: "Unlink Device",
             zone_entrance: "Zone 1: Entrance & Fresh", zone_dry: "Zone 2: Dry Aisles", zone_cold: "Zone 3: Cold & Meats", zone_home: "Zone 4: Cleaning & Care", zone_checkout: "Zone 5: Checkout & Frozen",
-            scanner_title: "Receipt Scanner"
+            scanner_title: "Receipt Scanner", scanner_sub: "Scan your paper receipt after shopping. If it's long, capture it in multiple photos.",
+            btn_photo_ticket: "Tap to photograph receipt", photo_tip: "Hold camera close for sharp focus", ocr_local_tip: "Processed locally on your device",
+            acc_items_title: "Detected Items:", btn_add_more_photos: "📸 Add another section of receipt", btn_cancel: "Cancel", btn_import_app: "Import To App!"
         },
         fr: {
             btn_cart: "Panier", search_ph: "🔍 Écrire un produit...", app_heading: "Dépenses Familiales",
@@ -698,13 +704,17 @@
             cat_oils: "Huiles", cat_canned: "Conserves", cat_coffee: "Café/Cacao", cat_drinks: "Boissons", cat_snacks: "Snacks/Friandises", cat_frozen: "Surgelés", cat_cleaning: "Nettoyage", cat_hygiene: "Hygiène", cat_paper: "Papier/Divers", cat_pets: "Animaux",
             btn_pay: "PAYER", cafe_title: "☕ Offrez-moi un café",
             cafe_desc: "<strong>SuperMart</strong> est gratuit et sans publicité.", pay_revolut: "💳 Payer par Carte / Google Pay", pay_paypal: "🅿️ Payer avec PayPal",
-            tut_title: "📖 Guide d'utilisation", tut_step1_b: "Avant de sortir:", tut_step1: "Préparez votre liste à la maison.", tut_step2_b: "En magasin:", tut_step2: "Ajustez les prix avec le crayon (✏️).", tut_step3_b: "Budget:", tut_step3: "Contrôlez la barre de couleur.", tut_step4_b: "Fini:", tut_step4: "Appuyez sur PAYER.", btn_understood: "Compris!",
+            tut_title: "📖 Guide d'utilisation v3.2.0", tut_step1_b: "Avant de sortir:", tut_step1: "Préparez votre liste à la maison.", tut_step2_b: "En magasin:", tut_step2: "Ajustez les prix avec le crayon (✏️).", 
+            tut_step3_scan_b: "🧾 Nouveauté Scanner:", tut_step3_scan: "Utilisez le bouton flottant 🧾 pour photographier votre reçu en papier. Les prix et produits se placeront automatiquement.",
+            tut_step3_b: "Budget:", tut_step3: "Contrôlez la barre de couleur.", tut_step4_b: "Fini:", tut_step4: "Appuyez sur PAYER.", btn_understood: "Compris!",
             calc_title: "🧮 Calculatrice", calc_use: "📋 Utiliser", offer_title: "⚖️ Calculateur d'offre:", price_label: "Prix:", grams_label: "Grammes:", units_label: "Qté:",
             frequents_sub: "⚡ Produits fréquents:", add_product_sub: "📝 Ajouter produit:", name_ph: "Nom", price_ph: "Prix €", btn_save_list: "Enregistrer",
             cart_title: "🛒 Produits dans le panier", btn_share_cart: "Partager sur WhatsApp", hist_title: "📜 Historique", settings_title: "⚙️ Paramètres",
             lang_select_label: "🌐 Langue de l'application:", budget_limit_label: "Limite de budget (€):", btn_save_limit: "Enregistrer la limite", btn_buy_coffee: "☕ Offrez-moi un café", btn_view_hist: "📜 Voir l'historique", danger_zone: "⚠️ ZONE DE DANGER", btn_clear_hist: "Effacer l'historique", switch_aisles_label: "🛒 Trier par rayons:", sync_title: "📱 Synchronisation mobile:", btn_copy_key: "Copier clé", btn_link_device: "Lier appareil", btn_unlink_device: "Délier appareil",
             zone_entrance: "Zone 1: Entrée & Frais", zone_dry: "Zone 2: Épicerie", zone_cold: "Zone 3: Froid & Viandes", zone_home: "Zone 4: Entretien", zone_checkout: "Zone 5: Caisse & Surgelés",
-            scanner_title: "Scanner de reçus"
+            scanner_title: "Scanner de reçus", scanner_sub: "Scannez votre reçu après vos achats. S'il est long, prenez-le en plusieurs photos.",
+            btn_photo_ticket: "Toucher pour photographier", photo_tip: "Rapprochez l'appareil pour plus de netteté", ocr_local_tip: "Traité localement sur votre téléphone",
+            acc_items_title: "Produits Détectés:", btn_add_more_photos: "📸 Ajouter une autre section du reçu", btn_cancel: "Annuler", btn_import_app: "Importer Dans L'App!"
         },
         it: {
             btn_cart: "Carrello", search_ph: "🔍 Scrivi prodotto...", app_heading: "Spese Familiari",
@@ -712,13 +722,17 @@
             cat_fruit: "Frutta", cat_veg: "Verdura", cat_meat: "Macelleria", cat_fish: "Pescheria", cat_milk: "Latte", cat_dairy: "Latticini", cat_coldcuts: "Salumi", cat_bread: "Pane/Pasticceria", cat_pantry: "Pasta/Riso/Legumi", cat_eggs: "Uova",
             cat_oils: "Oli", cat_canned: "Conserve", cat_coffee: "Caffè/Cacao", cat_drinks: "Bevande", cat_snacks: "Snack/Dolci", cat_frozen: "Surgelati", cat_cleaning: "Pulizia", cat_hygiene: "Igiene", cat_paper: "Carta/Varie", cat_pets: "Animali",
             btn_pay: "PAGA", cafe_title: "☕ Offrimi un caffè", cafe_desc: "<strong>SuperMart</strong> è gratuita e senza pubblicità.", pay_revolut: "💳 Paga con Carta / Google Pay", pay_paypal: "🅿️ Paga con PayPal",
-            tut_title: "📖 Come usare SuperMart", tut_step1_b: "Prima di uscire:", tut_step1: "Prepara la lista da casa.", tut_step2_b: "Al supermercato:", tut_step2: "Usa la matita (✏️) per impostare il prezzo.", tut_step3_b: "Controllo spese:", tut_step3: "La barra indica il budget.", tut_step4_b: "Finito:", tut_step4: "Premi PAGA.", btn_understood: "Capito!",
+            tut_title: "📖 Come usare SuperMart v3.2.0", tut_step1_b: "Prima di uscire:", tut_step1: "Prepara la lista da casa.", tut_step2_b: "Al supermercato:", tut_step2: "Usa la matita (✏️) per impostare il prezzo.", 
+            tut_step3_scan_b: "🧾 Novità Scanner:", tut_step3_scan: "Usa il pulsante galleggiante 🧾 per fotografare lo scontrino cartaceo. Prezzi e prodotti si aggiorneranno automaticamente.",
+            tut_step3_b: "Controllo spese:", tut_step3: "La barra indica il budget.", tut_step4_b: "Finito:", tut_step4: "Premi PAGA.", btn_understood: "Capito!",
             calc_title: "🧮 Calcolatrice", calc_use: "📋 Usa", offer_title: "⚖️ Calcolatore Offerta:", price_label: "Prezzo:", grams_label: "Grammi:", units_label: "Qtà:",
             frequents_sub: "⚡ Prodotti Frequenti:", add_product_sub: "📝 Aggiungi Prodotto:", name_ph: "Nome", price_ph: "Prezzo €", btn_save_list: "Salva in Lista",
             cart_title: "🛒 Prodotti nel Carrello", btn_share_cart: "Condividi su WhatsApp", hist_title: "📜 Cronologia", settings_title: "⚙️ Impostazioni",
             lang_select_label: "🌐 Lingua dell'App:", budget_limit_label: "Limite Budget (€):", btn_save_limit: "Salva Limite", btn_buy_coffee: "☕ Offrimi un caffè", btn_view_hist: "📜 Vedi Cronologia", danger_zone: "⚠️ ZONA PERICOLO", btn_clear_hist: "Cancella Cronologia", switch_aisles_label: "🛒 Ordina per Corsie:", sync_title: "📱 Sincronizzazione:", btn_copy_key: "Copia Chiave", btn_link_device: "Collega Dispositivo", btn_unlink_device: "Scollega Dispositivo",
             zone_entrance: "Zona 1: Ingresso e Freschi", zone_dry: "Zona 2: Corsie Secche", zone_cold: "Zona 3: Freddo e Carne", zone_home: "Zona 4: Pulizia", zone_checkout: "Zona 5: Uscita e Surgelati",
-            scanner_title: "Scanner di scontrini"
+            scanner_title: "Scanner scontrini", scanner_sub: "Scansiona lo scontrino cartaceo dopo la spesa. Se è lungo, scatta più foto.",
+            btn_photo_ticket: "Tocca per fotografare scontrino", photo_tip: "Avvicina la fotocamera per mettere a fuoco", ocr_local_tip: "Elaborato localmente sul telefono",
+            acc_items_title: "Prodotti Rilevati:", btn_add_more_photos: "📸 Aggiungi altra foto dello scontrino", btn_cancel: "Annulla", btn_import_app: "Importa Nell'App!"
         },
         de: {
             btn_cart: "Warenkorb", search_ph: "🔍 Produkt eingeben...", app_heading: "Familienausgaben",
@@ -726,13 +740,17 @@
             cat_fruit: "Obst", cat_veg: "Gemüse", cat_meat: "Metzgerei", cat_fish: "Fisch", cat_milk: "Milch", cat_dairy: "Molkerei", cat_coldcuts: "Wurstwaren", cat_bread: "Brot/Gebäck", cat_pantry: "Nudeln/Reis/Bohnen", cat_eggs: "Eier",
             cat_oils: "Öle", cat_canned: "Konserven", cat_coffee: "Kaffee/Kakao", cat_drinks: "Getränke", cat_snacks: "Snacks/Süßes", cat_frozen: "Tiefkühlkost", cat_cleaning: "Reinigung", cat_hygiene: "Hygiene", cat_paper: "Papier/Sonstiges", cat_pets: "Tiere",
             btn_pay: "BEZAHLEN", cafe_title: "☕ Kaufe mir einen Kaffee", cafe_desc: "<strong>SuperMart</strong> ist 100% kostenlos ohne Werbung.", pay_revolut: "💳 Mit Karte / Google Pay zahlen", pay_paypal: "🅿️ Mit PayPal zahlen",
-            tut_title: "📖 Anleitung", tut_step1_b: "Vor dem Einkauf:", tut_step1: "Erstelle deine Liste zu Hause.", tut_step2_b: "Im Laden:", tut_step2: "Ändere den Preis mit dem Stift (✏️).", tut_step3_b: "Budgetkontrolle:", tut_step3: "Achte auf den Farbbalten.", tut_step4_b: "Fertig:", tut_step4: "Tippe auf BEZAHLEN.", btn_understood: "Verstanden!",
+            tut_title: "📖 Anleitung v3.2.0", tut_step1_b: "Vor dem Einkauf:", tut_step1: "Erstelle deine Liste zu Hause.", tut_step2_b: "Im Laden:", tut_step2: "Ändere den Preis mit dem Stift (✏️).", 
+            tut_step3_scan_b: "🧾 Neu Beleg-Scanner:", tut_step3_scan: "Nutze den schwebenden Button 🧾, um deinen Papierbeleg zu fotografieren. Preise und Artikel werden automatisch zugeordnet.",
+            tut_step3_b: "Budgetkontrolle:", tut_step3: "Achte auf den Farbbalten.", tut_step4_b: "Fertig:", tut_step4: "Tippe auf BEZAHLEN.", btn_understood: "Verstanden!",
             calc_title: "🧮 Rechner", calc_use: "📋 Nutzen", offer_title: "⚖️ Angebotsrechner:", price_label: "Preis:", grams_label: "Gramm:", units_label: "Menge:",
             frequents_sub: "⚡ Häufige Produkte:", add_product_sub: "📝 Produkt hinzufügen:", name_ph: "Name", price_ph: "Preis €", btn_save_list: "Speichern",
             cart_title: "🛒 Artikel im Warenkorb", btn_share_cart: "Auf WhatsApp teilen", hist_title: "📜 Verlauf", settings_title: "⚙️ Einstellungen",
             lang_select_label: "🌐 App-Sprache:", budget_limit_label: "Budgetlimit (€):", btn_save_limit: "Limit Speichern", btn_buy_coffee: "☕ Kaufe mir einen Kaffee", btn_view_hist: "📜 Verlauf Anzeigen", danger_zone: "⚠️ GEFAHRENZONE", btn_clear_hist: "Verlauf Löschen", switch_aisles_label: "🛒 Nach Gängen sortieren:", sync_title: "📱 Synchronisation:", btn_copy_key: "Schlüssel kopieren", btn_link_device: "Gerät verknüpfen", btn_unlink_device: "Gerät trennen",
             zone_entrance: "Zone 1: Eingang & Frische", zone_dry: "Zone 2: Vorratskammer", zone_cold: "Zone 3: Kühlung & Fleisch", zone_home: "Zone 4: Reinigung", zone_checkout: "Zone 5: Kasse & Tiefkühl",
-            scanner_title: "Beleg-Scanner"
+            scanner_title: "Beleg-Scanner", scanner_sub: "Scanne deinen Papierbeleg nach dem Einkauf. Wenn er lang ist, mache mehrere Fotos.",
+            btn_photo_ticket: "Tippen zum Fotografieren", photo_tip: "Kamera nah halten für Schärfe", ocr_local_tip: "Lokal auf dem Handy verarbeitet",
+            acc_items_title: "Erkannte Artikel:", btn_add_more_photos: "📸 Weitern Teil des Belegs hinzufügen", btn_cancel: "Abbrechen", btn_import_app: "In App Importieren!"
         },
         pt: {
             btn_cart: "Carrinho", search_ph: "🔍 Digite o produto...", app_heading: "Despesas Familiares",
@@ -740,13 +758,17 @@
             cat_fruit: "Fruta", cat_veg: "Legumes", cat_meat: "Talho", cat_fish: "Peixaria", cat_milk: "Leite", cat_dairy: "Lacticínios", cat_coldcuts: "Charcutaria", cat_bread: "Pão/Pastelaria", cat_pantry: "Massa/Arroz/Legumes", cat_eggs: "Ovos",
             cat_oils: "Óleos", cat_canned: "Conservas", cat_coffee: "Café/Cacau", cat_drinks: "Bebidas", cat_snacks: "Doces/Snacks", cat_frozen: "Congelados", cat_cleaning: "Limpeza", cat_hygiene: "Higiene", cat_paper: "Papel/Vários", cat_pets: "Animais",
             btn_pay: "PAGAR", cafe_title: "☕ Pague-me um café", cafe_desc: "<strong>SuperMart</strong> é 100% gratuito e sem anúncios.", pay_revolut: "💳 Pagar com Cartão / Google Pay", pay_paypal: "🅿️ Pagar com PayPal",
-            tut_title: "📖 Como usar SuperMart", tut_step1_b: "Antes de sair:", tut_step1: "Prepare a lista em casa.", tut_step2_b: "No supermercado:", tut_step2: "Ajuste preços com o lápis (✏️).", tut_step3_b: "Controlo de gastos:", tut_step3: "Veja a barra de orçamento.", tut_step4_b: "Ao terminar:", tut_step4: "Toque em PAGAR.", btn_understood: "Entendido!",
+            tut_title: "📖 Como usar SuperMart v3.2.0", tut_step1_b: "Antes de sair:", tut_step1: "Prepare a lista em casa.", tut_step2_b: "No supermercado:", tut_step2: "Ajuste preços com o lápis (✏️).", 
+            tut_step3_scan_b: "🧾 Novidade Scanner:", tut_step3_scan: "Use o botão flutuante 🧾 para fotografar o seu recibo de papel. Os preços e produtos serão atualizados automaticamente.",
+            tut_step3_b: "Controlo de gastos:", tut_step3: "Veja a barra de orçamento.", tut_step4_b: "Ao terminar:", tut_step4: "Toque em PAGAR.", btn_understood: "Entendido!",
             calc_title: "🧮 Calculadora", calc_use: "📋 Usar", offer_title: "⚖️ Calculadora de Oferta:", price_label: "Preço:", grams_label: "Gramas:", units_label: "Qtd:",
             frequents_sub: "⚡ Produtos Frequentes:", add_product_sub: "📝 Adicionar Produto:", name_ph: "Nome", price_ph: "Preço €", btn_save_list: "Guardar na Lista",
             cart_title: "🛒 Produtos no Carrinho", btn_share_cart: "Partilhar no WhatsApp", hist_title: "📜 Histórico", settings_title: "⚙️ Configurações",
             lang_select_label: "🌐 Idioma da Aplicação:", budget_limit_label: "Limite de Orçamento (€):", btn_save_limit: "Guardar Limite", btn_buy_coffee: "☕ Pague-me um café", btn_view_hist: "📜 Ver Histórico", danger_zone: "⚠️ ZONA DE PERIGO", btn_clear_hist: "Limpar Histórico Completo", switch_aisles_label: "🛒 Ordenar por Corredores:", sync_title: "📱 Sincronização:", btn_copy_key: "Copiar Chave", btn_link_device: "Vincular Dispositivo", btn_unlink_device: "Desvincular Dispositivo",
             zone_entrance: "Zona 1: Entrada e Frescos", zone_dry: "Zona 2: Corredores Secos", zone_cold: "Zona 3: Frio e Carnes", zone_home: "Zona 4: Limpeza", zone_checkout: "Zona 5: Saída e Congelados",
-            scanner_title: "Scanner de recibos"
+            scanner_title: "Scanner de recibos", scanner_sub: "Digitalize o recibo de papel após a compra. Se for longo, tire várias fotos.",
+            btn_photo_ticket: "Toque para fotografar recibo", photo_tip: "Aproxime a câmara para focar", ocr_local_tip: "Processado localmente no telemóvel",
+            acc_items_title: "Produtos Detetados:", btn_add_more_photos: "📸 Adicionar outra secção do recibo", btn_cancel: "Cancelar", btn_import_app: "Importar Para A App!"
         },
         ca: {
             btn_cart: "Cistella", search_ph: "🔍 Escriu un producte...", app_heading: "Despesa Familiar",
@@ -754,13 +776,17 @@
             cat_fruit: "Fruita", cat_veg: "Verdura", cat_meat: "Carnisseria", cat_fish: "Peixateria", cat_milk: "Llet", cat_dairy: "Làctics", cat_coldcuts: "Embotits", cat_bread: "Pa/Forneria", cat_pantry: "Llegums/Pasta/Arròs", cat_eggs: "Ous",
             cat_oils: "Olis", cat_canned: "Conserves", cat_coffee: "Cafè/Cacau", cat_drinks: "Begudes", cat_snacks: "Snacks/Dolços", cat_frozen: "Congelats", cat_cleaning: "Neteja", cat_hygiene: "Higiene", cat_paper: "Paper/Varis", cat_pets: "Mascotes",
             btn_pay: "PAGAR", cafe_title: "☕ Convida'm a un Cafè", cafe_desc: "<strong>SuperMart</strong> és una aplicació 100% gratuïta i sense anuncis.", pay_revolut: "💳 Pagar amb Targeta / Google Pay", pay_paypal: "🅿️ Pagar amb PayPal",
-            tut_title: "📖 Com usar SuperMart", tut_step1_b: "Abans de sortir:", tut_step1: "Prepara la teva llista des de casa.", tut_step2_b: "Al súper:", tut_step2: "Ajusta els preus amb el llapis (✏️).", tut_step3_b: "Control de despesa:", tut_step3: "El semàfor t'avisarà del pressupost.", tut_step4_b: "En acabar:", tut_step4: "Prem PAGAR.", btn_understood: "Entès!",
+            tut_title: "📖 Com usar SuperMart v3.2.0", tut_step1_b: "Abans de sortir:", tut_step1: "Prepara la teva llista des de casa.", tut_step2_b: "Al súper:", tut_step2: "Ajusta els preus amb el llapis (✏️).", 
+            tut_step3_scan_b: "🧾 Novetat Escàner:", tut_step3_scan: "Fes servir el botó flotant 🧾 per fotografiar el teu tiquet de paper. Els preus i productes es col·locaran automàticament.",
+            tut_step3_b: "Control de despesa:", tut_step3: "El semàfor t'avisarà del pressupost.", tut_step4_b: "En acabar:", tut_step4: "Prem PAGAR.", btn_understood: "Entès!",
             calc_title: "🧮 Calculadora", calc_use: "📋 Usar", offer_title: "⚖️ Calculador d'Oferta:", price_label: "Preu:", grams_label: "Grams:", units_label: "Uts:",
             frequents_sub: "⚡ Productes Freqüents:", add_product_sub: "📝 Apuntar Producte:", name_ph: "Nom", price_ph: "Preu €", btn_save_list: "Guardar a la Llista",
             cart_title: "🛒 Productes a la Cistella", btn_share_cart: "Compartir per WhatsApp", hist_title: "📜 Historial de Compres", settings_title: "⚙️ Configuració",
             lang_select_label: "🌐 Idioma de l'Aplicació:", budget_limit_label: "Límit de Pressupost (€):", btn_save_limit: "Guardar Límit", btn_buy_coffee: "☕ Convida'm a un cafè", btn_view_hist: "📜 Veure Historial Guardat", danger_zone: "⚠️ ZONA DE PERILL", btn_clear_hist: "Esborrar Historial Complet", switch_aisles_label: "🛒 Ordenar per Passadissos:", sync_title: "📱 Sincronització Dispositius:", btn_copy_key: "Copiar Clau", btn_link_device: "Vincular Mòbil", btn_unlink_device: "Desvincular Dispositiu",
             zone_entrance: "Zona 1: Entrada i Frescos", zone_dry: "Zona 2: Passadissos Secs", zone_cold: "Zona 3: Murals de Fred i Carna", zone_home: "Zona 4: Neteja", zone_checkout: "Zona 5: Sortida i Congelats",
-            scanner_title: "Escàner de tiquets"
+            scanner_title: "Escàner de tiquets", scanner_sub: "Escaneja el teu tiquet de paper després de comprar. Si és llarg, fes-li diverses fotos.",
+            btn_photo_ticket: "Toca per fotografiar tiquet", photo_tip: "Apropa la càmera per a més nitidesa", ocr_local_tip: "Processat localment al teu mòbil",
+            acc_items_title: "Productes Detectats:", btn_add_more_photos: "📸 Afegir un altre tram del tiquet", btn_cancel: "Cancel·lar", btn_import_app: "Importar A L'App!"
         }
     };
 
@@ -1222,7 +1248,7 @@
         document.getElementById('contenedor-resultados-ticket').style.display = 'none';
         document.getElementById('lista-items-detectados').innerHTML = '';
         document.getElementById('btn-guardar-ticket').disabled = true;
-        document.getElementById('texto-boton-captura').textContent = 'Toca para fotografiar ticket';
+        document.getElementById('texto-boton-captura').textContent = t.btn_photo_ticket || 'Toca para fotografiar ticket';
         productosDetectadosTicket = [];
     }
 
@@ -1252,7 +1278,7 @@
             const worker = await Tesseract.createWorker('spa', 1, {
                 logger: m => {
                     if (m.status === 'recognizing text') {
-                        textoProgreso.textContent = `Analizando foto... ${Math.round((m.progress || 0) * 100)}%`;
+                        textoProgreso.textContent = `Analizando... ${Math.round((m.progress || 0) * 100)}%`;
                     }
                 }
             });
@@ -1289,13 +1315,13 @@
             });
 
             loader.style.display = 'none';
-            document.getElementById('texto-boton-captura').textContent = '📸 Añadir otra foto del ticket';
+            document.getElementById('texto-boton-captura').textContent = t.btn_add_more_photos || '📸 Añadir otra foto del ticket';
             renderizarProductosDetectados();
 
         } catch (error) {
             console.error('❌ Error OCR:', error);
             loader.style.display = 'none';
-            alert('No se pudo procesar la imagen. Intenta fotografiar con más luz y enfoque.');
+            alert(langKey === 'es' ? 'No se pudo procesar la imagen. Intenta fotografiar con más luz y enfoque.' : 'Image processing failed. Try taking photo with more light.');
         }
     }
 
@@ -1309,7 +1335,7 @@
         totalDetectados.textContent = `${productosDetectadosTicket.length} acumulados`;
 
         if (productosDetectadosTicket.length === 0) {
-            listaItems.innerHTML = `<p style="text-align:center; color:gray; padding:10px 0; margin:0;">No se reconocieron precios claros en esta foto.</p>`;
+            listaItems.innerHTML = `<p style="text-align:center; color:gray; padding:10px 0; margin:0;">${langKey === 'es' ? 'No se reconocieron precios claros en esta foto.' : 'No clear prices recognized in this photo.'}</p>`;
             contenedorResultados.style.display = 'block';
             return;
         }
@@ -1360,7 +1386,7 @@
             const palabras = diccionarioSmartCategorias[cat];
             if (palabras.some(p => n.includes(p))) return cat;
         }
-        return 'Papel/Varios'; // Categoría por defecto si no hay coincidencia
+        return 'Papel/Varios';
     }
 
     async function confirmarImportacionTicket() {
@@ -1386,7 +1412,7 @@
         if (categoriaActiva) renderFrecuentes();
 
         cerrarModalEscaner();
-        alert(`¡${importadosCount} productos importados y sincronizados correctamente en tus tarjetas!`);
+        alert(langKey === 'es' ? `¡${importadosCount} productos importados y sincronizados correctamente en tus tarjetas!` : `¡${importadosCount} items successfully imported to your app!`);
     }
 
     function calcInput(val) {
@@ -1596,7 +1622,7 @@
     }
 
     function desvincularDispositivo() {
-        if(confirm(langKey === 'es' ? "¿Quieres desvincular este dispositivo?\nSe generará una clave UID totalmente nueva e independiente." : "Unlink this device?\nA completely new independent UID key will be generated.")) {
+        if(confirm(langKey === 'es' ? "¿Quieres desvincular este dispositivo?\nSe generará una clave UID totalmente nueva e independent." : "Unlink this device?\nA completely new independent UID key will be generated.")) {
             localStorage.removeItem('supermart_uid');
             alert("🔄 Dispositivo desvinculado. Reiniciando app para generar un nuevo código único...");
             location.reload();
