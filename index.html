@@ -33,7 +33,10 @@
         .sugerencias-busqueda { background: #fff; color: #333; border-radius: 10px; margin-top: 4px; max-height: 220px; overflow-y: auto; position: absolute; width: 100%; z-index: 150; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; }
         .sugerencia-item { padding: 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 15px; cursor: pointer; }
 
-        #toast { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--verde); color: white; padding: 12px 20px; border-radius: 25px; font-weight: bold; font-size: 15px; z-index: 400; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        /* Toast con colores dinámicos */
+        #toast { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--verde); color: white; padding: 12px 20px; border-radius: 25px; font-weight: bold; font-size: 15px; z-index: 400; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background 0.3s; }
+        #toast.toast-info { background: var(--azul); }
+        #toast.toast-exito { background: var(--verde); }
 
         .total-info { display: flex; justify-content: space-between; align-items: center; }
         #total { font-size: 28px; font-weight: bold; }
@@ -65,7 +68,6 @@
         .fila-ajuste { display: flex; justify-content: space-around; align-items: center; max-width: 1200px; margin: 0 auto; }
         .btn-a { width: 50px; height: 50px; border-radius: 25px; border: none; color: white; font-weight: bold; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* Botón Flotante del Escáner */
         .btn-escaner-flotante { position: fixed; bottom: 85px; right: 18px; z-index: 250; background: #d35400; color: white; width: 58px; height: 58px; border-radius: 29px; border: 2px solid #f39c12; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: 0.2s; }
         .btn-escaner-flotante:active { transform: scale(0.92); }
 
@@ -230,7 +232,6 @@
 
 <div class="historial" id="hist-list" onclick="abrirModal('modal-historial')"><b>Última Compra:</b> Cargando...</div>
 
-<!-- Botón Flotante para el Escáner de Recibos -->
 <button class="btn-escaner-flotante" onclick="abrirModalEscaner()" title="Escanear Ticket de Compra">
     🧾
 </button>
@@ -246,7 +247,7 @@
     </div>
 </div>
 
-<!-- Modal Escáner de Recibos (Multifoto OCR) -->
+<!-- Modal Escáner -->
 <div class="modal" id="modal-escaner">
     <div class="modal-contenido">
         <div class="modal-header">
@@ -323,7 +324,7 @@
     </div>
 </div>
 
-<!-- Modal Tutorial CORREGIDO MULTILINGÜE -->
+<!-- Modal Tutorial -->
 <div class="modal" id="modal-tutorial">
     <div class="modal-contenido">
         <div class="modal-header">
@@ -521,13 +522,19 @@
         localStorage.setItem('supermart_uid', userId);
     }
 
+    // Bandera para evitar bucle entre la app local y el servidor en tiempo real
+    let esActualizacionLocal = false;
+
     window.sincronizarCloud = async function(clave, valor) {
         try {
+            esActualizacionLocal = true;
             await setDoc(doc(dbCloud, "usuarios_supermart", userId), {
                 [clave]: typeof valor === 'object' ? JSON.stringify(valor) : valor,
                 ultimaActualizacion: new Date().toISOString()
             }, { merge: true });
+            setTimeout(() => { esActualizacionLocal = false; }, 800);
         } catch(e) {
+            esActualizacionLocal = false;
             console.warn("Fallo sincronización nube (modo offline activo):", e);
         }
     };
@@ -536,6 +543,8 @@
         try {
             const docRef = doc(dbCloud, "usuarios_supermart", userId);
             onSnapshot(docRef, (docSnap) => {
+                if (esActualizacionLocal) return; // Si el cambio viene de este dispositivo, ignorar rebote
+
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     let huboCambios = false;
@@ -744,7 +753,7 @@
             cart_title: "🛒 Artikel im Warenkorb", btn_share_cart: "Auf WhatsApp teilen", hist_title: "📜 Verlauf", settings_title: "⚙️ Einstellungen",
             lang_select_label: "🌐 App-Sprache:", budget_limit_label: "Budgetlimit (€):", btn_save_limit: "Limit Speichern", btn_buy_coffee: "☕ Kaufe mir einen Kaffee", btn_view_hist: "📜 Verlauf Anzeigen", danger_zone: "⚠️ GEFAHRENZONE", btn_clear_hist: "Verlauf Löschen", switch_aisles_label: "🛒 Nach Gängen sortieren:", sync_title: "📱 Synchronisation:", btn_copy_key: "Schlüssel kopieren", btn_link_device: "Gerät verknüpfen", btn_unlink_device: "Gerät trennen",
             zone_entrance: "Zone 1: Eingang & Frische", zone_dry: "Zone 2: Vorratskammer", zone_cold: "Zone 3: Kühlung & Fleisch", zone_home: "Zone 4: Reinigung", zone_checkout: "Zone 5: Kasse & Tiefkühl",
-            scanner_title: "Beleg-Scanner", scanner_sub: "Scanne deinen Papierbeleg nach dem Einkauf. Wenn er lang ist, mache mehrere Fotos.",
+            scanner_title: "Beleg-Scanner", scanner_sub: "Scanne deinen Papierbeleg nach dem Einkauf. Wenn er lang ist, mache mehere Fotos.",
             btn_photo_ticket: "Tippen zum Fotografieren", photo_tip: "Kamera nah halten für Schärfe", ocr_local_tip: "Lokal auf dem Handy verarbeitet",
             acc_items_title: "Erkannte Artikel:", btn_add_more_photos: "📸 Weitern Teil des Belegs hinzufügen", btn_cancel: "Abbrechen", btn_import_app: "In App Importieren!"
         },
@@ -923,28 +932,32 @@
         document.getElementById('p' + n).classList.add('active');
     }
 
-    function mostrarToast(msg) {
+    // Avisos diferenciados por color: 'exito' (verde) para carro, 'info' (azul) para listas/configuración
+    function mostrarToast(msg, tipo = 'exito') {
         const t = document.getElementById('toast');
         t.innerText = msg;
+        t.className = tipo === 'info' ? 'toast-info' : 'toast-exito';
         t.style.display = 'block';
         setTimeout(() => { t.style.display = 'none'; }, 1800);
     }
 
     function sumar(nombre, precio, categoria) {
+        const pNum = parseFloat(precio) || 0;
         const existente = carroActual.find(item => item.nombre.toLowerCase() === nombre.toLowerCase());
+        
         if (existente) {
             const numUnidadesSumar = uds;
-            if (!confirm(`⚠️ "${nombre}" ${langKey === 'es' ? 'ya está en el carro' : 'is already in cart'} (${existente.unidades}x).\n\n${langKey === 'es' ? '¿Quieres sumar' : 'Add'} ${numUnidadesSumar} ${langKey === 'es' ? 'unidad(es) más con precio' : 'more unit(s) with price'} ${precio.toFixed(2)}€?`)) {
+            if (!confirm(`⚠️ "${nombre}" ${langKey === 'es' ? 'ya está en el carro' : 'is already in cart'} (${existente.unidades}x).\n\n${langKey === 'es' ? '¿Quieres sumar' : 'Add'} ${numUnidadesSumar} ${langKey === 'es' ? 'unidad(es) más con precio' : 'more unit(s) with price'} ${pNum.toFixed(2)}€?`)) {
                 return;
             }
             existente.unidades += numUnidadesSumar;
-            existente.precioUnitario = precio || 0;
+            existente.precioUnitario = pNum;
             existente.total = existente.unidades * existente.precioUnitario;
-            mostrarToast(`✓ ¡Sumado +${numUnidadesSumar} a ${nombre}!`);
+            mostrarToast(`✓ ¡Sumado +${numUnidadesSumar} a ${nombre}!`, 'exito');
         } else {
-            const importe = (precio || 0) * uds;
-            carroActual.push({ id: Date.now(), nombre: nombre, categoria: categoria, precioUnitario: precio || 0, unidades: uds, total: importe, cogido: false });
-            mostrarToast(`✓ ¡${nombre} (${uds}x) ${langKey === 'es' ? 'añadido!' : 'added!'}`);
+            const importe = pNum * uds;
+            carroActual.push({ id: Date.now(), nombre: nombre, categoria: categoria, precioUnitario: pNum, unidades: uds, total: importe, cogido: false });
+            mostrarToast(`✓ ¡${nombre} (${uds}x) ${langKey === 'es' ? 'añadido!' : 'added!'}`, 'exito');
         }
 
         uds = 1;
@@ -957,6 +970,21 @@
         if (!habituales[categoriaActiva] || !habituales[categoriaActiva][index]) return;
         const prod = habituales[categoriaActiva][index];
         sumar(prod.nombre, prod.precio, categoriaActiva);
+    }
+
+    function editarPrecioDirectoCarro(id, nuevoValorStr) {
+        const item = carroActual.find(p => p.id === id);
+        if (!item) return;
+
+        const pNum = parseFloat(nuevoValorStr.replace(',', '.'));
+        if (isNaN(pNum) || pNum < 0) return;
+
+        item.precioUnitario = pNum;
+        item.total = item.unidades * item.precioUnitario;
+        
+        actualizar();
+        renderDesglose();
+        mostrarToast(`✏️ ${langKey === 'es' ? 'Precio actualizado:' : 'Price updated:'} ${item.nombre} (${pNum.toFixed(2)}€)`, 'info');
     }
 
     function toggleCogido(id) {
@@ -989,11 +1017,10 @@
         if(u1Btns.length > 0) u1Btns[0].classList.add('active');
     }
 
-    function calcularTotal() { return carroActual.reduce((acc, item) => acc + item.total, 0); }
+    function calcularTotal() { return carroActual.reduce((acc, item) => acc + (parseFloat(item.total) || 0), 0); }
 
     function actualizar() {
         const total = calcularTotal();
-        // Guardado persistente tanto local (IndexedDB/localStorage) como en vivo en Firebase
         guardarDatosDB('carro_temp', carroActual);
 
         document.getElementById('total').innerText = total.toFixed(2) + '€';
@@ -1016,13 +1043,14 @@
         const categoriasConCero = new Set();
 
         for (let cat in habituales) {
-            if (habituales[cat].some(p => p.precio === 0)) {
+            if (habituales[cat].some(p => parseFloat(p.precio) === 0)) {
                 categoriasConCero.add(cat);
             }
         }
 
         carroActual.forEach(item => {
-            if (item.precioUnitario === 0 || item.total === 0) {
+            const pUnit = parseFloat(item.precioUnitario) || 0;
+            if (pUnit === 0 || item.total === 0) {
                 categoriasConCero.add(item.categoria);
             }
             subtotales[item.categoria] = (subtotales[item.categoria] || 0) + item.total;
@@ -1147,7 +1175,7 @@
             <div class="item-habitual-card ${prod.enCasa ? 'en-casa' : ''}">
                 <div class="item-habitual-info">
                     <strong>${prod.nombre} ${prod.enCasa ? (langKey === 'es' ? '✅ (En casa)' : '✅ (At home)') : ''}</strong>
-                    <span class="item-habitual-precio-badge" style="background:${prod.precio > 0 ? 'var(--azul)' : 'var(--rojo)'}">${prod.precio > 0 ? prod.precio.toFixed(2) + '€' : '⚠️ 0.00€'}</span>
+                    <span class="item-habitual-precio-badge" style="background:${prod.precio > 0 ? 'var(--azul)' : 'var(--rojo)'}">${prod.precio > 0 ? parseFloat(prod.precio).toFixed(2) + '€' : '⚠️ 0.00€'}</span>
                 </div>
                 <div class="item-habitual-acciones">
                     <button class="btn-mini" style="background:${prod.enCasa ? 'var(--verde)' : 'rgba(0,0,0,0.1)'}; color:${prod.enCasa ? 'white' : 'var(--texto)'}" onclick="toggleEnCasa(${index})" title="Marcar en casa">🏠</button>
@@ -1172,7 +1200,7 @@
         const nuevoNombre = prompt(`${langKey === 'es' ? 'Corregir nombre del producto' : 'Edit product name'}:`, prod.nombre);
         if (nuevoNombre === null || nuevoNombre.trim() === '') return;
 
-        const nuevoPrecioStr = prompt(`${langKey === 'es' ? 'Actualizar precio para' : 'Update price for'} "${nuevoNombre.trim()}":`, prod.precio > 0 ? prod.precio.toFixed(2) : '0.00');
+        const nuevoPrecioStr = prompt(`${langKey === 'es' ? 'Actualizar precio para' : 'Update price for'} "${nuevoNombre.trim()}":`, prod.precio > 0 ? parseFloat(prod.precio).toFixed(2) : '0.00');
         if (nuevoPrecioStr === null) return;
 
         const nuevoPrecio = parseFloat(nuevoPrecioStr.replace(',', '.'));
@@ -1195,7 +1223,7 @@
 
         renderFrecuentes();
         actualizar();
-        mostrarToast(`✏️ ${langKey === 'es' ? 'Actualizado:' : 'Updated:'} ${prod.nombre} (${nuevoPrecio.toFixed(2)}€)`);
+        mostrarToast(`✏️ ${langKey === 'es' ? 'Actualizado:' : 'Updated:'} ${prod.nombre} (${nuevoPrecio.toFixed(2)}€)`, 'info');
     }
 
     function guardarNuevoEnLista() {
@@ -1220,7 +1248,7 @@
         inputPrecio.value = '';
         renderFrecuentes();
         actualizar();
-        mostrarToast(precio > 0 ? `📌 ${nombre} ${langKey === 'es' ? 'guardado en lista' : 'saved to list'}` : `📌 ${nombre} ${langKey === 'es' ? 'apuntado (0.00€)' : 'added (0.00€)'}`);
+        mostrarToast(precio > 0 ? `📌 ${nombre} ${langKey === 'es' ? 'guardado en lista' : 'saved to list'}` : `📌 ${nombre} ${langKey === 'es' ? 'apuntado (0.00€)' : 'added (0.00€)'}`, 'info');
     }
 
     function eliminarHabitual(index) {
@@ -1230,7 +1258,7 @@
         actualizar();
     }
 
-    /* --- LÓGICA DEL ESCÁNER DE TICKETS MULTIFOTO (OCR TESSERACT.JS) --- */
+    /* --- ESCÁNER DE TICKETS MULTIFOTO (OCR TESSERACT.JS) --- */
     let productosDetectadosTicket = [];
 
     function abrirModalEscaner() {
@@ -1525,11 +1553,19 @@
                         ${item.cogido ? '✓' : '◯'}
                     </button>
                     <div>
-                        <strong>${item.nombre}</strong> <small>(${item.unidades}x ${item.precioUnitario > 0 ? item.precioUnitario.toFixed(2) + '€' : '⚠️ 0.00€'})</small><br>
-                        <span style="color:var(--azul); font-weight:bold;">${item.total.toFixed(2)}€</span>
+                        <strong>${item.nombre}</strong> <small>(${item.unidades}x)</small><br>
+                        <div style="display:flex; align-items:center; gap:4px; margin-top:2px;" onclick="event.stopPropagation();">
+                            <input type="number" step="0.01" value="${item.precioUnitario > 0 ? parseFloat(item.precioUnitario).toFixed(2) : '0.00'}" 
+                                onchange="editarPrecioDirectoCarro(${item.id}, this.value)" 
+                                style="width:65px; padding:2px 4px; border-radius:6px; border:1px solid #ccc; font-weight:bold; font-size:13px; color:var(--azul);">
+                            <span style="font-size:12px; font-weight:bold;">€</span>
+                        </div>
                     </div>
                 </div>
-                <button class="btn-mini" style="background:var(--rojo); color:white;" onclick="eliminarDelCarro(${item.id})">🗑️</button>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--azul); font-weight:bold; font-size:14px;">${item.total.toFixed(2)}€</span>
+                    <button class="btn-mini" style="background:var(--rojo); color:white;" onclick="eliminarDelCarro(${item.id})">🗑️</button>
+                </div>
             </div>
         `).join('');
     }
@@ -1574,7 +1610,7 @@
             guardarDatosDB('compras_detalladas_v150', historialCompras);
             actualizar();
             renderHistorialDetallado();
-            mostrarToast("🗑️ " + (langKey === 'es' ? "Compra eliminada" : "Purchase deleted"));
+            mostrarToast("🗑️ " + (langKey === 'es' ? "Compra eliminada" : "Purchase deleted"), 'info');
         }
     }
 
@@ -1606,7 +1642,7 @@
         const uid = localStorage.getItem('supermart_uid');
         if(uid) {
             navigator.clipboard.writeText(uid).then(() => {
-                mostrarToast("📋 ¡Clave copiada al portapapeles!");
+                mostrarToast("📋 ¡Clave copiada al portapapeles!", 'info');
             }).catch(() => {
                 prompt("Copia esta clave para usarla en otro móvil:", uid);
             });
@@ -1623,7 +1659,7 @@
     }
 
     function desvincularDispositivo() {
-        if(confirm(langKey === 'es' ? "¿Quieres desvincular este dispositivo?\nSe generará una clave UID totalmente nueva e independiente." : "Unlink this device?\nA completely new independent UID key will be generated.")) {
+        if(confirm(langKey === 'es' ? "¿Quieres desvincular este dispositivo?\nSe generará una clave UID totalmente nueva e independent." : "Unlink this device?\nA completely new independent UID key will be generated.")) {
             localStorage.removeItem('supermart_uid');
             alert("🔄 Dispositivo desvinculado. Reiniciando app para generar un nuevo código único...");
             location.reload();
