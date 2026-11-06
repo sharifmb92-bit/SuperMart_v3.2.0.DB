@@ -545,7 +545,6 @@
                         if (typeof habituales !== 'undefined') habituales = JSON.parse(data.habituales_v130);
                         huboCambios = true;
                     }
-                    // Sincronización en vivo del Carro Temporal
                     if (data.carro_temp && data.carro_temp !== localStorage.getItem('carro_temp')) {
                         localStorage.setItem('carro_temp', data.carro_temp);
                         if (typeof carroActual !== 'undefined') carroActual = JSON.parse(data.carro_temp);
@@ -779,7 +778,7 @@
             calc_title: "🧮 Calculadora", calc_use: "📋 Usar", offer_title: "⚖️ Calculador d'Oferta:", price_label: "Preu:", grams_label: "Grams:", units_label: "Uts:",
             frequents_sub: "⚡ Productes Freqüents:", add_product_sub: "📝 Apuntar Producte:", name_ph: "Nom", price_ph: "Preu €", btn_save_list: "Guardar a la Llista",
             cart_title: "🛒 Productes a la Cistella", btn_share_cart: "Compartir per WhatsApp", hist_title: "📜 Historial de Compres", settings_title: "⚙️ Configuració",
-            lang_select_label: "🌐 Idioma de l'Aplicació:", budget_limit_label: "Límit de Pressupost (€):", btn_save_limit: "Guardar Límit", btn_buy_coffee: "☕ Convida'm a un cafè", btn_view_hist: "📜 Veure Historial Guardat", danger_zone: "⚠️ ZONA DE PERILL", btn_clear_hist: "Esborrar Historial Complet", switch_aisles_label: "🛒 Ordenar per Passadissos:", sync_title: "📱 Sincronització Dispositius:", btn_copy_key: "Copiar Clau", btn_link_device: "Vincular Mòbil", btn_unlink_device: "Desvincular Dispositiu",
+            lang_select_label: "🌐 Idioma de l'Aplicació:", budget_limit_label: "Límit de Pressupost (€):", btn_save_limit: "Guardar Límit", btn_buy_coffee: "☕ Convida'm a un cafè", btn_view_hist: "📜 Veure Historial Guardat", danger_zone: "⚠️ ZONA DE PERILL", btn_clear_hist: "Esborrar Historial Complet", switch_aisles_label: "🛒 Ordenar per Passadissos:", sync_title: "📱 Sincronització Dispositius:", btn_copy_key: "Copiar Clau", btn_link_device: "Vincular Mòbil", btn_unlink_dispositivo: "Desvincular Dispositiu",
             zone_entrance: "Zona 1: Entrada i Frescos", zone_dry: "Zona 2: Passadissos Secs", zone_cold: "Zona 3: Murals de Fred i Carna", zone_home: "Zona 4: Neteja", zone_checkout: "Zona 5: Sortida i Congelats",
             scanner_title: "Escàner de tiquets", scanner_sub: "Escaneja el teu tiquet de paper després de comprar. Si és llarg, fes-li diverses fotos.",
             btn_photo_ticket: "Toca per fotografiar tiquet", photo_tip: "Apropa la càmera per a més nitidesa", ocr_local_tip: "Processat localment al teu mòbil",
@@ -954,6 +953,12 @@
         if(navigator.vibrate) navigator.vibrate(40);
     }
 
+    function sumarFrecuentePorIndice(index) {
+        if (!habituales[categoriaActiva] || !habituales[categoriaActiva][index]) return;
+        const prod = habituales[categoriaActiva][index];
+        sumar(prod.nombre, prod.precio, categoriaActiva);
+    }
+
     function toggleCogido(id) {
         const item = carroActual.find(p => p.id === id);
         if (item) {
@@ -988,7 +993,7 @@
 
     function actualizar() {
         const total = calcularTotal();
-        // Guardado persistente tanto local como en vivo a Firebase
+        // Guardado persistente tanto local (IndexedDB/localStorage) como en vivo en Firebase
         guardarDatosDB('carro_temp', carroActual);
 
         document.getElementById('total').innerText = total.toFixed(2) + '€';
@@ -1147,7 +1152,7 @@
                 <div class="item-habitual-acciones">
                     <button class="btn-mini" style="background:${prod.enCasa ? 'var(--verde)' : 'rgba(0,0,0,0.1)'}; color:${prod.enCasa ? 'white' : 'var(--texto)'}" onclick="toggleEnCasa(${index})" title="Marcar en casa">🏠</button>
                     <button class="btn-mini" style="background:rgba(0,0,0,0.15); color:var(--texto);" onclick="editarNombreYPrecioHabitual(${index})" title="Editar nombre y precio">✏️</button>
-                    <button class="btn-mini" style="background:var(--verde); color:white; padding:8px 14px;" onclick="sumar('${prod.nombre}', ${prod.precio}, '${categoriaActiva}')">+ ${langKey === 'es' ? 'Añadir' : 'Add'}</button>
+                    <button class="btn-mini" style="background:var(--verde); color:white; padding:8px 14px;" onclick="sumarFrecuentePorIndice(${index})">+ ${langKey === 'es' ? 'Añadir' : 'Add'}</button>
                     <button class="btn-mini" style="background:var(--rojo); color:white;" onclick="eliminarHabitual(${index})">🗑️</button>
                 </div>
             </div>
